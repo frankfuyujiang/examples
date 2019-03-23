@@ -17,6 +17,8 @@
 package org.tensorflow.lite.examples.classification;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -50,6 +52,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
@@ -79,6 +84,7 @@ public abstract class CameraActivity extends AppCompatActivity
   private int yRowStride;
   private static int counter=0;
   private static String preItemTitle = null;
+  protected LottieAnimationView animationView;
   private List<String> landfill = Arrays.asList("diaper",
           "handkerchief",
           "coffee mug");
@@ -236,6 +242,11 @@ public abstract class CameraActivity extends AppCompatActivity
 
 //    plusImageView.setOnClickListener(this);
 //    minusImageView.setOnClickListener(this);
+    animationView=findViewById(R.id.animation_view);
+    animationView.addAnimatorListener(new AnimatorListenerAdapter() {
+      @Override public void onAnimationEnd(Animator animation) {
+        animationView.setProgress(0);
+      }});
   }
 
   protected int[] getRgbBytes() {
@@ -253,6 +264,8 @@ public abstract class CameraActivity extends AppCompatActivity
 
   /** Callback for android.hardware.Camera API */
   @Override
+
+
   public void onPreviewFrame(final byte[] bytes, final Camera camera) {
     if (isProcessingFrame) {
       LOGGER.w("Dropping frame!");
@@ -535,13 +548,23 @@ public abstract class CameraActivity extends AppCompatActivity
   }
 
   protected void readyForNextImage() {
+    runOnUiThread(
+            new Runnable() {
+              @Override
+              public void run() {
+                if (counter>=4){
+                  animationView.playAnimation();
+                }
+              }
+            }
+    );
     if (postInferenceCallback != null) {
       try {
         if (counter<4) {
           Thread.sleep(500);
         }else{
-          Thread.sleep(5000);
-          counter=0;
+            counter=0;
+            Thread.sleep(5000);
         }
       } catch (InterruptedException e) {
         e.printStackTrace();
@@ -591,7 +614,10 @@ public abstract class CameraActivity extends AppCompatActivity
           float confidence = recognition.getConfidence();
           if(confidence<0.35){
             recognitionTextView.setText("Empty");
-            recognitionValueTextView.setText(" ");
+            //recognitionValueTextView.setText("");
+            recognitionValueTextView.setText(
+                    String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+            counter=0;
           }else {
             recognitionValueTextView.setText(
                     String.format("%.2f", (100 * recognition.getConfidence())) + "%");

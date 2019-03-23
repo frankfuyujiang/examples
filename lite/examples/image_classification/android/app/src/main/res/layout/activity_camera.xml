@@ -17,7 +17,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#00000000"
+    tools:ignore="ExtraText">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,6 +51,22 @@
         </android.support.v7.widget.Toolbar>-->
 
     </RelativeLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:lottie_fileName="checkmark.json"
+        app:lottie_loop="false"
+        app:lottie_autoPlay="false" />
+    <!--   app:lottie_rawRes="@assets/hello_world"
+   // or-->
+
+<!--
+   // Loop indefinitely
+   app:lottie_loop="true"
+   // Start playing as soon as the animation is loaded-->
+
 
     <include
         android:id="@+id/bottom_sheet_layout"

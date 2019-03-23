@@ -51,6 +51,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
@@ -76,6 +77,49 @@ public abstract class CameraActivity extends AppCompatActivity
   private byte[][] yuvBytes = new byte[3][];
   private int[] rgbBytes = null;
   private int yRowStride;
+  private List<String> landfill = Arrays.asList("diaper",
+          "handkerchief",
+          "coffee mug");
+  private List<String> recycle = Arrays.asList("beer bottle",
+          "beer glass",
+          "can opener",
+          "pill bottle",
+          "cup",
+          "measuring cup");
+  private List<String> compost = Arrays.asList("French loaf",
+          "bagel",
+          "pretzel",
+          "cheeseburger",
+          "hotdog",
+          "mashed potato",
+          "head cabbage",
+          "broccoli",
+          "cauliflower",
+          "zucchini",
+          "spaghetti squash",
+          "acorn squash",
+          "butternut squash",
+          "cucumber",
+          "artichoke",
+          "bell pepper",
+          "cardoon",
+          "mushroom",
+          "Granny Smith",
+          "strawberry",
+          "orange",
+          "lemon",
+          "fig",
+          "pineapple",
+          "banana",
+          "jackfruit",
+          "custard apple",
+          "pomegranate",
+          "hay",
+          "carbonara",
+          "chocolate sauce",
+          "dough",
+          "meat loaf",
+          "pizza");
   private Runnable postInferenceCallback;
   private Runnable imageConverter;
   //    private View debugLayout;
@@ -107,9 +151,9 @@ public abstract class CameraActivity extends AppCompatActivity
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     setContentView(R.layout.activity_camera);
-    Toolbar toolbar = findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    //Toolbar toolbar = findViewById(R.id.toolbar);
+    //setSupportActionBar(toolbar);
+    //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
     if (hasPermission()) {
       setFragment();
@@ -117,79 +161,79 @@ public abstract class CameraActivity extends AppCompatActivity
       requestPermission();
     }
 
-    threadsTextView = findViewById(R.id.threads);
-    plusImageView = findViewById(R.id.plus);
-    minusImageView = findViewById(R.id.minus);
-    apiSwitchCompat = findViewById(R.id.api_info_switch);
-    bottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
-    gestureLayout = findViewById(R.id.gesture_layout);
-    sheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-    bottomSheetArrowImageView = findViewById(R.id.bottom_sheet_arrow);
+//    threadsTextView = findViewById(R.id.threads);
+//    plusImageView = findViewById(R.id.plus);
+//    minusImageView = findViewById(R.id.minus);
+//    apiSwitchCompat = findViewById(R.id.api_info_switch);
+//    bottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
+//    gestureLayout = findViewById(R.id.gesture_layout);
+//    sheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+//    bottomSheetArrowImageView = findViewById(R.id.bottom_sheet_arrow);
 
-    ViewTreeObserver vto = gestureLayout.getViewTreeObserver();
-    vto.addOnGlobalLayoutListener(
-        new ViewTreeObserver.OnGlobalLayoutListener() {
-          @Override
-          public void onGlobalLayout() {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-              gestureLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-            } else {
-              gestureLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-            //                int width = bottomSheetLayout.getMeasuredWidth();
-            int height = gestureLayout.getMeasuredHeight();
-
-            sheetBehavior.setPeekHeight(height);
-          }
-        });
-    sheetBehavior.setHideable(false);
-
-    sheetBehavior.setBottomSheetCallback(
-        new BottomSheetBehavior.BottomSheetCallback() {
-          @Override
-          public void onStateChanged(@NonNull View bottomSheet, int newState) {
-            switch (newState) {
-              case BottomSheetBehavior.STATE_HIDDEN:
-                break;
-              case BottomSheetBehavior.STATE_EXPANDED:
-                {
-                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_down);
-                }
-                break;
-              case BottomSheetBehavior.STATE_COLLAPSED:
-                {
-                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
-                }
-                break;
-              case BottomSheetBehavior.STATE_DRAGGING:
-                break;
-              case BottomSheetBehavior.STATE_SETTLING:
-                bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
-                break;
-            }
-          }
-
-          @Override
-          public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
-        });
+//    ViewTreeObserver vto = gestureLayout.getViewTreeObserver();
+////    vto.addOnGlobalLayoutListener(
+////        new ViewTreeObserver.OnGlobalLayoutListener() {
+////          @Override
+////          public void onGlobalLayout() {
+////            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+////              gestureLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+////            } else {
+////              gestureLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+////            }
+////            //                int width = bottomSheetLayout.getMeasuredWidth();
+////            int height = gestureLayout.getMeasuredHeight();
+////
+////            sheetBehavior.setPeekHeight(height);
+////          }
+////        });
+////    sheetBehavior.setHideable(false);
+////
+////    sheetBehavior.setBottomSheetCallback(
+////        new BottomSheetBehavior.BottomSheetCallback() {
+////          @Override
+////          public void onStateChanged(@NonNull View bottomSheet, int newState) {
+////            switch (newState) {
+////              case BottomSheetBehavior.STATE_HIDDEN:
+////                break;
+////              case BottomSheetBehavior.STATE_EXPANDED:
+////                {
+////                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_down);
+////                }
+////                break;
+////              case BottomSheetBehavior.STATE_COLLAPSED:
+////                {
+////                  bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
+////                }
+////                break;
+////              case BottomSheetBehavior.STATE_DRAGGING:
+////                break;
+////              case BottomSheetBehavior.STATE_SETTLING:
+////                bottomSheetArrowImageView.setImageResource(R.drawable.icn_chevron_up);
+////                break;
+////            }
+////          }
+////
+////          @Override
+////          public void onSlide(@NonNull View bottomSheet, float slideOffset) {}
+////        });
 
     recognitionTextView = findViewById(R.id.detected_item);
     recognitionValueTextView = findViewById(R.id.detected_item_value);
-    recognition1TextView = findViewById(R.id.detected_item1);
-    recognition1ValueTextView = findViewById(R.id.detected_item1_value);
-    recognition2TextView = findViewById(R.id.detected_item2);
-    recognition2ValueTextView = findViewById(R.id.detected_item2_value);
+//    recognition1TextView = findViewById(R.id.detected_item1);
+//    recognition1ValueTextView = findViewById(R.id.detected_item1_value);
+//    recognition2TextView = findViewById(R.id.detected_item2);
+//    recognition2ValueTextView = findViewById(R.id.detected_item2_value);
 
-    frameValueTextView = findViewById(R.id.frame_info);
-    cropValueTextView = findViewById(R.id.crop_info);
-    cameraResolutionTextView = findViewById(R.id.view_info);
-    rotationTextView = findViewById(R.id.rotation_info);
-    inferenceTimeTextView = findViewById(R.id.inference_info);
+//    frameValueTextView = findViewById(R.id.frame_info);
+//    cropValueTextView = findViewById(R.id.crop_info);
+//    cameraResolutionTextView = findViewById(R.id.view_info);
+//    rotationTextView = findViewById(R.id.rotation_info);
+//    inferenceTimeTextView = findViewById(R.id.inference_info);
 
-    apiSwitchCompat.setOnCheckedChangeListener(this);
+//    apiSwitchCompat.setOnCheckedChangeListener(this);
 
-    plusImageView.setOnClickListener(this);
-    minusImageView.setOnClickListener(this);
+//    plusImageView.setOnClickListener(this);
+//    minusImageView.setOnClickListener(this);
   }
 
   protected int[] getRgbBytes() {
@@ -509,21 +553,32 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @UiThread
   protected void showResultsInBottomSheet(List<Recognition> results) {
-    if (results != null && results.size() >= 3) {
+    if (results != null && results.size() >= 1) {
+
       Recognition recognition = results.get(0);
       if (recognition != null) {
-        if (recognition.getTitle() != null) recognitionTextView.setText(recognition.getTitle());
+        if (recognition.getTitle() != null){
+          String tempItem = recognition.getTitle();
+          if (recycle.contains(tempItem)) {
+            recognitionTextView.setText("Recycle-" +tempItem);
+          }else if(compost.contains(tempItem)){
+            recognitionTextView.setText("Compost-" +tempItem);
+          }else if(landfill.contains(tempItem)){
+            recognitionTextView.setText("Landfill-" +tempItem);
+          }else {
+            recognitionTextView.setText("Unknown-" +tempItem);
+          }
+        }
         if (recognition.getConfidence() != null)
           recognitionValueTextView.setText(
               String.format("%.2f", (100 * recognition.getConfidence())) + "%");
       }
-
-      Recognition recognition1 = results.get(1);
+      /*Recognition recognition1 = results.get(1);
       if (recognition1 != null) {
         if (recognition1.getTitle() != null) recognition1TextView.setText(recognition1.getTitle());
         if (recognition1.getConfidence() != null)
           recognition1ValueTextView.setText(
-              String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
+                  String.format("%.2f", (100 * recognition1.getConfidence())) + "%");
       }
 
       Recognition recognition2 = results.get(2);
@@ -532,28 +587,28 @@ public abstract class CameraActivity extends AppCompatActivity
         if (recognition2.getConfidence() != null)
           recognition2ValueTextView.setText(
               String.format("%.2f", (100 * recognition2.getConfidence())) + "%");
-      }
+      }*/
     }
   }
 
   protected void showFrameInfo(String frameInfo) {
-    frameValueTextView.setText(frameInfo);
+//    frameValueTextView.setText(frameInfo);
   }
 
   protected void showCropInfo(String cropInfo) {
-    cropValueTextView.setText(cropInfo);
+//    cropValueTextView.setText(cropInfo);
   }
 
   protected void showCameraResolution(String cameraInfo) {
-    cameraResolutionTextView.setText(previewWidth + "x" + previewHeight);
+//    cameraResolutionTextView.setText(previewWidth + "x" + previewHeight);
   }
 
   protected void showRotationInfo(String rotation) {
-    rotationTextView.setText(rotation);
+//    rotationTextView.setText(rotation);
   }
 
   protected void showInference(String inferenceTime) {
-    inferenceTimeTextView.setText(inferenceTime);
+//    inferenceTimeTextView.setText(inferenceTime);
   }
 
   protected abstract void processImage();
@@ -570,29 +625,28 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-    setUseNNAPI(isChecked);
-    if (isChecked) apiSwitchCompat.setText("NNAPI");
-    else apiSwitchCompat.setText("TFLITE");
+//    setUseNNAPI(isChecked);
+//    if (isChecked) apiSwitchCompat.setText("NNAPI");
+//    else apiSwitchCompat.setText("TFLITE");
   }
-
   @Override
   public void onClick(View v) {
-    if (v.getId() == R.id.plus) {
-      String threads = threadsTextView.getText().toString().trim();
-      int numThreads = Integer.parseInt(threads);
-      if (numThreads >= 9) return;
-      numThreads++;
-      threadsTextView.setText(String.valueOf(numThreads));
-      setNumThreads(numThreads);
-    } else if (v.getId() == R.id.minus) {
-      String threads = threadsTextView.getText().toString().trim();
-      int numThreads = Integer.parseInt(threads);
-      if (numThreads == 1) {
-        return;
-      }
-      numThreads--;
-      threadsTextView.setText(String.valueOf(numThreads));
-      setNumThreads(numThreads);
-    }
+//    if (v.getId() == R.id.plus) {
+//      String threads = threadsTextView.getText().toString().trim();
+//      int numThreads = Integer.parseInt(threads);
+//      if (numThreads >= 9) return;
+//      numThreads++;
+//      threadsTextView.setText(String.valueOf(numThreads));
+//      setNumThreads(numThreads);
+//    } else if (v.getId() == R.id.minus) {
+//      String threads = threadsTextView.getText().toString().trim();
+//      int numThreads = Integer.parseInt(threads);
+//      if (numThreads == 1) {
+//        return;
+//      }
+//      numThreads--;
+//      threadsTextView.setText(String.valueOf(numThreads));
+//      setNumThreads(numThreads);
+//    }
   }
 }

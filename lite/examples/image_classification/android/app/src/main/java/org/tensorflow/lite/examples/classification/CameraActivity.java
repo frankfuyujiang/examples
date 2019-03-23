@@ -552,16 +552,17 @@ public abstract class CameraActivity extends AppCompatActivity
             new Runnable() {
               @Override
               public void run() {
-                if (counter>=4){
+                if (counter>=3){
                   animationView.playAnimation();
+                  recognitionValueTextView.setText("Dumped");
                 }
               }
             }
     );
     if (postInferenceCallback != null) {
       try {
-        if (counter<4) {
-          Thread.sleep(500);
+        if (counter<3) {
+          Thread.sleep(1000);
         }else{
             counter=0;
             Thread.sleep(5000);

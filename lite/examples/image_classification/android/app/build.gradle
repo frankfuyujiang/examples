@@ -26,7 +26,7 @@ android {
 
 // Download default models; if you wish to use your own models then
 // place them in the "assets" directory and comment out this line.
-apply from:'download.gradle'
+apply from: 'download.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -38,4 +38,8 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
     // Use local TensorFlow library
     // implementation 'org.tensorflow:tensorflow-lite-local:0.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.google.android.gms:play-services-plus:16.0.0'
+    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

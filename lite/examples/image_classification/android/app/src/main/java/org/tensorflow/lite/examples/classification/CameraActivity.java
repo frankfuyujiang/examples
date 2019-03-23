@@ -77,6 +77,8 @@ public abstract class CameraActivity extends AppCompatActivity
   private byte[][] yuvBytes = new byte[3][];
   private int[] rgbBytes = null;
   private int yRowStride;
+  private static int counter=0;
+  private static String preItemTitle = null;
   private List<String> landfill = Arrays.asList("diaper",
           "handkerchief",
           "coffee mug");
@@ -534,6 +536,16 @@ public abstract class CameraActivity extends AppCompatActivity
 
   protected void readyForNextImage() {
     if (postInferenceCallback != null) {
+      try {
+        if (counter<4) {
+          Thread.sleep(500);
+        }else{
+          Thread.sleep(5000);
+          counter=0;
+        }
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       postInferenceCallback.run();
     }
   }
@@ -558,20 +570,33 @@ public abstract class CameraActivity extends AppCompatActivity
       Recognition recognition = results.get(0);
       if (recognition != null) {
         if (recognition.getTitle() != null){
-          String tempItem = recognition.getTitle();
-          if (recycle.contains(tempItem)) {
-            recognitionTextView.setText("Recycle-" +tempItem);
-          }else if(compost.contains(tempItem)){
-            recognitionTextView.setText("Compost-" +tempItem);
-          }else if(landfill.contains(tempItem)){
-            recognitionTextView.setText("Landfill-" +tempItem);
+          String tempItemTitle = recognition.getTitle();
+          if (tempItemTitle == preItemTitle){
+            counter++;
           }else {
-            recognitionTextView.setText("Unknown-" +tempItem);
+            if (recycle.contains(tempItemTitle)) {
+              recognitionTextView.setText("Recycle-" + tempItemTitle);
+            } else if (compost.contains(tempItemTitle)) {
+              recognitionTextView.setText("Compost-" + tempItemTitle);
+            } else if (landfill.contains(tempItemTitle)) {
+              recognitionTextView.setText("Landfill-" + tempItemTitle);
+            } else {
+              recognitionTextView.setText("Unknown-" + tempItemTitle);
+            }
+            preItemTitle=tempItemTitle;
+            counter=0;
           }
         }
-        if (recognition.getConfidence() != null)
-          recognitionValueTextView.setText(
-              String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+        if (recognition.getConfidence() != null) {
+          float confidence = recognition.getConfidence();
+          if(confidence<0.35){
+            recognitionTextView.setText("Empty");
+            recognitionValueTextView.setText(" ");
+          }else {
+            recognitionValueTextView.setText(
+                    String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+          }
+        }
       }
       /*Recognition recognition1 = results.get(1);
       if (recognition1 != null) {

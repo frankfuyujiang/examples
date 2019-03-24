@@ -82,52 +82,12 @@ public abstract class CameraActivity extends AppCompatActivity
   private byte[][] yuvBytes = new byte[3][];
   private int[] rgbBytes = null;
   private int yRowStride;
-  private static int counter=0;
+  private int counter=0;
   private static String preItemTitle = null;
   protected LottieAnimationView animationView;
-  private List<String> landfill = Arrays.asList("diaper",
-          "handkerchief",
-          "coffee mug");
-  private List<String> recycle = Arrays.asList("beer bottle",
-          "beer glass",
-          "can opener",
-          "pill bottle",
-          "cup",
-          "measuring cup");
-  private List<String> compost = Arrays.asList("French loaf",
-          "bagel",
-          "pretzel",
-          "cheeseburger",
-          "hotdog",
-          "mashed potato",
-          "head cabbage",
-          "broccoli",
-          "cauliflower",
-          "zucchini",
-          "spaghetti squash",
-          "acorn squash",
-          "butternut squash",
-          "cucumber",
-          "artichoke",
-          "bell pepper",
-          "cardoon",
-          "mushroom",
-          "Granny Smith",
-          "strawberry",
-          "orange",
-          "lemon",
-          "fig",
-          "pineapple",
-          "banana",
-          "jackfruit",
-          "custard apple",
-          "pomegranate",
-          "hay",
-          "carbonara",
-          "chocolate sauce",
-          "dough",
-          "meat loaf",
-          "pizza");
+  private List<String> landfill = Arrays.asList("abaya", "analog clock", "academic gown", "apron", "ashcan", "balloon", "backpack", "ballpoint", "Band Aid", "bathing cap", "bath towel", "bearskin", "bib", "bikini", "binder", "bolo tie", "bonnet", "bow", "bow tie", "brass", "brassiere", "broom", "bucket", "buckle", "bulletproof vest", "caldron", "candle", "cardigan", "cassette", "Christmas stocking", "cloak", "cocktail shaker", "clog", "coffee mug", "coffeepot", "combination lock", "coil", "doormat", "face powder", "feather boa", "fountain pen", "fur coat", "golf ball", "gown", "hair slide", "hair spray", "half track", "hamper", "harmonica", "handkerchief", "hatchet", "holster", "hoopskirt", "hourglass", "jean", "jersey", "kimono", "knee pad", "knot", "lab coat", "lampshade", "letter opener", "lighter", "liner", "lipstick", "Loafer", "lotion", "loupe", "loupe", "lumbermill", "magnetic compass", "maraca", "marimba", "mask", "matchstick", "military uniform", "miniskirt", "mitten", "moped", "mortar", "mortarboard", "mosquito net", "muzzle", "neck brace", "necklace", "ocarina", "oil filter", "overskirt", "oxygen mask", "packet", "paddle", "paddlewheel", "padlock", "paintbrush", "pajama", "panpipe", "pencil box", "pencil sharpener", "perfume", "pick", "pickelhaube", "pillow", "ping-pong ball", "pinwheel", "piggy bank", "plastic bag", "poncho", "prayer rug", "purse", "quill", "quilt", "rubber eraser", "rugby ball", "rule", "running shoe", "safe", "safety pin", "saltshaker", "sandal", "sarong", "sax", "scabbard", "scale", "scoreboard", "screen", "screw", "screwdriver", "seat belt", "shield", "shower cap", "shower curtain", "ski", "shovel", "ski mask", "sleeping bag", "slide rule", "sliding door", "snorkel", "soccer ball", "sock", "sombrero", "soup bowl", "spatula", "suit", "sundial", "sunglass", "sunglasses", "sunscreen", "swab", "sweatshirt", "swimming trunks", "syringe", "tape player", "teapot", "teddy", "umbrella", "tennis ball", "unicycle", "upright", "wallet", "vase", "vault", "velvet", "vending machine", "vestment", "viaduct", "violin", "volleyball", "waffle iron", "whistle", "wig", "wooden spoon", "book jacket", "menu");
+  private List<String> recycle = Arrays.asList("beaker", "beer bottle", "beer glass", "can opener", "chain", "envelope", "file", "frying pan", "hammer", "hook", "iron", "jigsaw puzzle", "ladle", "lens cap", "manhole cover", "measuring cup", "milk can", "mixing bowl", "notebook", "Petri dish", "pill bottle", "pitcher", "plate rack", "pop bottle", "pot", "shopping basket", "soap dispenser", "tray", "water bottle", "water jug", "wine bottle", "whiskey jug", "wok", "plate", "cup");
+  private List<String> compost = Arrays.asList("tench", "goldfish", "great white shark", "tiger shark", "hammerhead", "electric ray", "stingray", "cock", "hen", "ostrich", "brambling", "goldfinch", "house finch", "junco", "indigo bunting", "robin", "bulbul", "jay", "magpie", "chickadee", "water ouzel", "kite", "bald eagle", "vulture", "great grey owl", "European fire salamander", "common newt", "eft", "spotted salamander", "axolotl", "bullfrog", "tree frog", "tailed frog", "loggerhead", "leatherback turtle", "mud turtle", "terrapin", "box turtle", "banded gecko", "common iguana", "American chameleon", "whiptail", "agama", "frilled lizard", "alligator lizard", "Gila monster", "green lizard", "African chameleon", "Komodo dragon", "African crocodile", "American alligator", "triceratops", "thunder snake", "ringneck snake", "hognose snake", "green snake", "king snake", "garter snake", "water snake", "vine snake", "night snake", "boa constrictor", "rock python", "Indian cobra", "green mamba", "sea snake", "horned viper", "diamondback", "sidewinder", "trilobite", "harvestman", "scorpion", "black and gold garden spider", "barn spider", "garden spider", "black widow", "tarantula", "wolf spider", "tick", "centipede", "black grouse", "ptarmigan", "ruffed grouse", "prairie chicken", "peacock", "quail", "partridge", "African grey", "macaw", "sulphur-crested cockatoo", "lorikeet", "coucal", "bee eater", "hornbill", "hummingbird", "jacamar", "toucan", "drake", "red-breasted merganser", "goose", "black swan", "tusker", "echidna", "platypus", "wallaby", "koala", "wombat", "jellyfish", "sea anemone", "brain coral", "flatworm", "nematode", "conch", "snail", "slug", "sea slug", "chiton", "chambered nautilus", "Dungeness crab", "rock crab", "fiddler crab", "king crab", "American lobster", "spiny lobster", "crayfish", "hermit crab", "isopod", "white stork", "black stork", "spoonbill", "flamingo", "little blue heron", "American egret", "bittern", "crane", "limpkin", "European gallinule", "American coot", "bustard", "ruddy turnstone", "red-backed sandpiper", "redshank", "dowitcher", "oystercatcher", "pelican", "king penguin", "albatross", "grey whale", "killer whale", "dugong", "sea lion", "Chihuahua", "Japanese spaniel", "Maltese dog", "Pekinese", "Shih-Tzu", "Blenheim spaniel", "papillon", "toy terrier", "Rhodesian ridgeback", "Afghan hound", "basset", "beagle", "bloodhound", "bluetick", "black-and-tan coonhound", "Walker hound", "English foxhound", "redbone", "borzoi", "Irish wolfhound", "Italian greyhound", "whippet", "Ibizan hound", "Norwegian elkhound", "otterhound", "Saluki", "Scottish deerhound", "Weimaraner", "Staffordshire bullterrier", "American Staffordshire terrier", "Bedlington terrier", "Border terrier", "Kerry blue terrier", "Irish terrier", "Norfolk terrier", "Norwich terrier", "Yorkshire terrier", "wire-haired fox terrier", "Lakeland terrier", "Sealyham terrier", "Airedale", "cairn", "Australian terrier", "Dandie Dinmont", "Boston bull", "miniature schnauzer", "giant schnauzer", "standard schnauzer", "Scotch terrier", "Tibetan terrier", "silky terrier", "soft-coated wheaten terrier", "West Highland white terrier", "Lhasa", "flat-coated retriever", "curly-coated retriever", "golden retriever", "Labrador retriever", "Chesapeake Bay retriever", "German short-haired pointer", "vizsla", "English setter", "Irish setter", "Gordon setter", "Brittany spaniel", "clumber", "English springer", "Welsh springer spaniel", "cocker spaniel", "Sussex spaniel", "Irish water spaniel", "kuvasz", "schipperke", "groenendael", "malinois", "briard", "kelpie", "komondor", "Old English sheepdog", "Shetland sheepdog", "collie", "Border collie", "Bouvier des Flandres", "Rottweiler", "German shepherd", "Doberman", "miniature pinscher", "Greater Swiss Mountain dog", "Bernese mountain dog", "Appenzeller", "EntleBucher", "boxer", "bull mastiff", "Tibetan mastiff", "French bulldog", "Great Dane", "Saint Bernard", "Eskimo dog", "malamute", "Siberian husky", "dalmatian", "affenpinscher", "basenji", "pug", "Leonberg", "Newfoundland", "Great Pyrenees", "Samoyed", "Pomeranian", "chow", "keeshond", "Brabancon griffon", "Pembroke", "Cardigan", "toy poodle", "miniature poodle", "standard poodle", "Mexican hairless", "timber wolf", "white wolf", "red wolf", "coyote", "dingo", "dhole", "African hunting dog", "hyena", "red fox", "kit fox", "Arctic fox", "grey fox", "tabby", "tiger cat", "Persian cat", "Siamese cat", "Egyptian cat", "cougar", "lynx", "leopard", "snow leopard", "jaguar", "lion", "tiger", "cheetah", "brown bear", "American black bear", "ice bear", "sloth bear", "mongoose", "meerkat", "tiger beetle", "ladybug", "ground beetle", "long-horned beetle", "leaf beetle", "dung beetle", "rhinoceros beetle", "weevil", "fly", "bee", "ant", "grasshopper", "cricket", "walking stick", "cockroach", "mantis", "cicada", "leafhopper", "lacewing", "dragonfly", "damselfly", "admiral", "ringlet", "monarch", "cabbage butterfly", "sulphur butterfly", "lycaenid", "starfish", "sea urchin", "sea cucumber", "wood rabbit", "hare", "Angora", "hamster", "porcupine", "fox squirrel", "marmot", "beaver", "guinea pig", "sorrel", "zebra", "hog", "wild boar", "warthog", "hippopotamus", "ox", "water buffalo", "bison", "ram", "bighorn", "ibex", "hartebeest", "impala", "gazelle", "Arabian camel", "llama", "weasel", "mink", "polecat", "black-footed ferret", "otter", "skunk", "badger", "armadillo", "three-toed sloth", "orangutan", "gorilla", "chimpanzee", "gibbon", "siamang", "guenon", "patas", "baboon", "macaque", "langur", "colobus", "proboscis monkey", "marmoset", "capuchin", "howler monkey", "titi", "spider monkey", "squirrel monkey", "Madagascar cat", "indri", "Indian elephant", "African elephant", "lesser panda", "giant panda", "barracouta", "eel", "coho", "rock beauty", "anemone fish", "sturgeon", "gar", "lionfish", "puffer", "amphibian", "bakery", "confectionery", "honeycomb", "jack-o-lantern", "mouse", "nail", "organ", "paper towel", "spider web", "guacamole", "trifle", "ice cream", "ice lolly", "French loaf", "bagel", "pretzel", "cheeseburger", "hotdog", "mashed potato", "head cabbage", "broccoli", "cauliflower", "zucchini", "consomme", "hot pot", "spaghetti squash", "acorn squash", "butternut squash", "cucumber", "artichoke", "bell pepper", "cardoon", "mushroom", "Granny Smith", "strawberry", "orange", "lemon", "fig", "pineapple", "banana", "jackfruit", "custard apple", "pomegranate", "hay", "carbonara", "chocolate sauce", "dough", "meat loaf", "pizza", "potpie", "burrito", "red wine", "espresso", "eggnog", "alp", "bubble", "coral reef", "geyser", "lakeside", "promontory", "sandbar", "seashore", "rapeseed", "daisy", "yellow lady's slipper", "corn", "acorn", "hip", "buckeye", "coral fungus", "agaric", "gyromitra", "stinkhorn", "earthstar", "hen-of-the-woods", "toilet tissue");
   private Runnable postInferenceCallback;
   private Runnable imageConverter;
   //    private View debugLayout;
@@ -570,6 +530,14 @@ public abstract class CameraActivity extends AppCompatActivity
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+      runOnUiThread(
+              new Runnable() {
+                @Override
+                public void run() {
+                  recognitionValueTextView.setText(" ");
+                }
+              }
+      );
       postInferenceCallback.run();
     }
   }
@@ -593,35 +561,36 @@ public abstract class CameraActivity extends AppCompatActivity
 
       Recognition recognition = results.get(0);
       if (recognition != null) {
-        if (recognition.getTitle() != null){
-          String tempItemTitle = recognition.getTitle();
-          if (tempItemTitle == preItemTitle){
-            counter++;
-          }else {
-            if (recycle.contains(tempItemTitle)) {
-              recognitionTextView.setText("Recycle-" + tempItemTitle);
-            } else if (compost.contains(tempItemTitle)) {
-              recognitionTextView.setText("Compost-" + tempItemTitle);
-            } else if (landfill.contains(tempItemTitle)) {
-              recognitionTextView.setText("Landfill-" + tempItemTitle);
-            } else {
-              recognitionTextView.setText("Unknown-" + tempItemTitle);
-            }
-            preItemTitle=tempItemTitle;
-            counter=0;
-          }
-        }
-        if (recognition.getConfidence() != null) {
+        if (recognition.getTitle() != null && recognition.getConfidence() != null) {
           float confidence = recognition.getConfidence();
-          if(confidence<0.35){
+          String tempItemTitle = recognition.getTitle();
+          if (confidence < 0.33) {
             recognitionTextView.setText("Empty");
             //recognitionValueTextView.setText("");
-            recognitionValueTextView.setText(
-                    String.format("%.2f", (100 * recognition.getConfidence())) + "%");
-            counter=0;
-          }else {
-            recognitionValueTextView.setText(
-                    String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+            //recognitionValueTextView.setText(
+            //        String.format("%.2f", (100 * recognition.getConfidence())) + "%");
+            counter = 0;
+          }else{
+            if (tempItemTitle == "shower curtain" || tempItemTitle == "bathtub" || tempItemTitle == "toilet tissue") {
+              recognitionTextView.setText("Empty");
+              counter = 0;
+            } else if (tempItemTitle == preItemTitle) {
+              counter++;
+            } else {
+              if (recycle.contains(tempItemTitle)) {
+                recognitionTextView.setText("Recycle");
+              } else if (compost.contains(tempItemTitle)) {
+                recognitionTextView.setText("Compost");
+              } else if (landfill.contains(tempItemTitle)) {
+                recognitionTextView.setText("Landfill");
+              } else {
+                recognitionTextView.setText("Unknown");
+              }
+              preItemTitle = tempItemTitle;
+              counter = 0;
+            }
+            //recognitionValueTextView.setText(
+            //        String.format("%.2f", (100 * recognition.getConfidence())) + "%");
           }
         }
       }

@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
-        Button button = findViewById(R.id.useButton);
+        Button button = findViewById(R.id.enterGarbage);
     }
     public void enterGarbage(View view){
         Intent intent = new Intent(this,ClassifierActivity.class);

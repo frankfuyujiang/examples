@@ -24,7 +24,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00000000"
+        android:background="?colorPrimary"
         android:orientation="vertical">
 
 
@@ -33,7 +33,8 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
+            android:background="?colorPrimary"
+            android:padding="10dp"
             tools:context="org.tensorflow.lite.examples.classification.CameraActivity" />
 
 
